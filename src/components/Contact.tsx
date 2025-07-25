@@ -48,17 +48,38 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900">Follow Us</h3>
-                  <p className="text-gray-600">See our latest work</p>
+                  <p className="text-gray-600">Stay connected with our community</p>
                 </div>
               </div>
-              <a 
-                href={`https://instagram.com/${siteContent.contact.instagram.replace('@', '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-purple-600 font-medium text-lg hover:text-purple-700 transition-colors"
-              >
-                {siteContent.contact.instagram}
-              </a>
+              <div className="space-y-3">
+                <a 
+                  href={`https://instagram.com/${siteContent.contact.instagram.replace('@', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-purple-600 font-medium hover:text-purple-700 transition-colors"
+                >
+                  <span>📸</span>
+                  {siteContent.contact.instagram}
+                </a>
+                <a 
+                  href="https://www.facebook.com/profile.php?id=61566058485167"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                >
+                  <span>👥</span>
+                  Facebook
+                </a>
+                <a 
+                  href="https://lagoslilac.blogspot.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-green-600 font-medium hover:text-green-700 transition-colors"
+                >
+                  <span>📝</span>
+                  Our Blog
+                </a>
+              </div>
             </div>
 
             {/* Location */}

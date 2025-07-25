@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { imageConfig } from '../utils/imageConfig';
 
 interface Artist {
   name: string;
@@ -12,6 +13,7 @@ interface Artist {
   achievements: string[];
   artworkCount: number;
   yearsActive: number;
+  imageUrl: string;
 }
 
 const Artists: React.FC = () => {
@@ -29,7 +31,8 @@ const Artists: React.FC = () => {
       inspiration: "I'm inspired by the power of drawing to communicate what words sometimes cannot. Every line tells a story, and every story has the potential to connect us to ourselves and each other.",
       achievements: ["Featured in Lagos Art Festival 2024", "Graphic recording for international conferences", "Community workshops reaching 200+ participants"],
       artworkCount: 45,
-      yearsActive: 8
+      yearsActive: 8,
+      imageUrl: imageConfig.artists.alexPlummer
     },
     {
       name: "Beata Pałach",
@@ -42,7 +45,8 @@ const Artists: React.FC = () => {
       inspiration: "Nature is my greatest teacher. I believe that by working with natural materials and honoring the environment in my practice, my art becomes a bridge between human creativity and the wisdom of the earth.",
       achievements: ["Sustainable Art Award Portugal 2024", "Solo exhibition 'Earth Whispers'", "Workshop leader at Eco-Art Summit"],
       artworkCount: 38,
-      yearsActive: 12
+      yearsActive: 12,
+      imageUrl: imageConfig.artists.beataPalach
     },
     {
       name: "Claire Lloyd-Bown",
@@ -55,7 +59,8 @@ const Artists: React.FC = () => {
       inspiration: "Art education should be a doorway, not a gatehouse. My work explores how traditional techniques can be enhanced by digital innovation, creating new possibilities for artistic expression.",
       achievements: ["Co-founder of LiLAC", "Former ICA Director of Education", "Digital Art Innovation Award 2023"],
       artworkCount: 52,
-      yearsActive: 15
+      yearsActive: 15,
+      imageUrl: imageConfig.artists.claireLloydBown
     },
     {
       name: "Jung-Ah (Joanne) Kim",
@@ -68,7 +73,8 @@ const Artists: React.FC = () => {
       inspiration: "Memory is not just about the past—it's about how our experiences shape who we become. My paintings are maps of my emotional journey across cultures, each piece a moment of recognition and understanding.",
       achievements: ["International Diaspora Art Exhibition", "Cultural Memory Project featured in Seoul Biennale", "Cross-Cultural Art Residency Program"],
       artworkCount: 41,
-      yearsActive: 10
+      yearsActive: 10,
+      imageUrl: imageConfig.artists.jungAhKim
     },
     {
       name: "Mallika Gardiner",
@@ -81,7 +87,8 @@ const Artists: React.FC = () => {
       inspiration: "Motherhood has taught me that creation is both an act of vulnerability and incredible strength. My art explores how Eastern and Western traditions can inform each other, creating something entirely new and beautiful.",
       achievements: ["Featured in Singapore Contemporary Art Fair", "Motherhood in Art symposium speaker", "Botanical Art Society recognition"],
       artworkCount: 36,
-      yearsActive: 9
+      yearsActive: 9,
+      imageUrl: imageConfig.artists.mallikaGardiner
     }
   ];
 
@@ -92,6 +99,81 @@ const Artists: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedArtist(null);
   };
+
+  const renderArtistCard = (artist: Artist, index: number) => (
+    <div 
+      key={artist.name}
+      className={`bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 fade-in-up delay-${index * 100}`}
+      onClick={() => handleArtistClick(artist)}
+      tabIndex={0}
+      aria-label={`Learn more about ${artist.name}`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleArtistClick(artist);
+        }
+      }}
+    >
+      {/* Artist Header with Image */}
+      <div className="text-center mb-6">
+        <div className="relative w-20 h-20 mx-auto mb-4">
+          <img
+            src={artist.imageUrl}
+            alt={`Portrait of ${artist.name}`}
+            className="w-full h-full object-cover rounded-full shadow-md"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-lilac-400/20 to-lilac-600/20 rounded-full"></div>
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-1">{artist.name}</h3>
+        <p className="text-lilac-600 font-medium">{artist.handle}</p>
+      </div>
+
+      {/* Artist Info */}
+      <div className="space-y-4">
+        <div>
+          <h4 className="font-semibold text-gray-800 mb-1">Background</h4>
+          <p className="text-sm text-gray-600">{artist.background}</p>
+        </div>
+
+        <div>
+          <h4 className="font-semibold text-gray-800 mb-1">Artistic Focus</h4>
+          <p className="text-sm text-gray-600">{artist.focus}</p>
+        </div>
+
+        <div>
+          <p className="text-sm text-gray-700 leading-relaxed">{artist.description}</p>
+        </div>
+
+        {/* Specialties */}
+        <div>
+          <h4 className="font-semibold text-gray-800 mb-2">Specialties</h4>
+          <div className="flex flex-wrap gap-2">
+            {artist.specialties.slice(0, 3).map((specialty) => (
+              <span 
+                key={specialty}
+                className="px-3 py-1 bg-lilac-100 text-lilac-700 text-xs rounded-full"
+              >
+                {specialty}
+              </span>
+            ))}
+            {artist.specialties.length > 3 && (
+              <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                +{artist.specialties.length - 3} more
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Click to learn more */}
+        <div className="pt-4 border-t border-gray-100">
+          <p className="text-sm text-lilac-600 font-medium text-center">
+            Click to learn more →
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <section id="artists" className="section-padding bg-gray-50">
@@ -106,62 +188,17 @@ const Artists: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artists.map((artist, index) => (
-            <div 
-              key={artist.name}
-              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
-              onClick={() => handleArtistClick(artist)}
-            >
-              {/* Artist Header */}
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-lilac-400 to-lilac-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-xl font-bold">
-                  {artist.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-1">{artist.name}</h3>
-                <p className="text-lilac-600 font-medium">{artist.handle}</p>
-              </div>
+        {/* 3x2 Grid Layout: First 3 artists, then 2 centered below */}
+        <div className="max-w-6xl mx-auto">
+          {/* First row - 3 artists */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 mb-12">
+            {artists.slice(0, 3).map((artist, index) => renderArtistCard(artist, index))}
+          </div>
 
-              {/* Artist Info */}
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-1">Background</h4>
-                  <p className="text-sm text-gray-600">{artist.background}</p>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-1">Artistic Focus</h4>
-                  <p className="text-sm text-gray-600">{artist.focus}</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-gray-700 leading-relaxed">{artist.description}</p>
-                </div>
-
-                {/* Specialties */}
-                <div>
-                  <h4 className="font-semibold text-gray-800 mb-2">Specialties</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {artist.specialties.map((specialty) => (
-                      <span 
-                        key={specialty}
-                        className="px-3 py-1 bg-lilac-100 text-lilac-700 text-xs rounded-full"
-                      >
-                        {specialty}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Click to learn more */}
-                <div className="pt-4 border-t border-gray-100">
-                  <p className="text-sm text-lilac-600 font-medium text-center">
-                    Click to learn more →
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))}
+          {/* Second row - 2 artists centered */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 max-w-2xl mx-auto">
+            {artists.slice(3).map((artist, index) => renderArtistCard(artist, index + 3))}
+          </div>
         </div>
 
         {/* Call to Action */}
@@ -197,13 +234,20 @@ const Artists: React.FC = () => {
 
       {/* Artist Detail Modal */}
       {selectedArtist && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          onClick={handleCloseModal}
+        >
+          <div 
+            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex justify-between items-center rounded-t-2xl">
               <h2 className="text-2xl font-bold text-gray-900">{selectedArtist.name}</h2>
               <button
                 onClick={handleCloseModal}
                 className="text-gray-400 hover:text-gray-600 transition-colors"
+                aria-label="Close modal"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -212,10 +256,15 @@ const Artists: React.FC = () => {
             </div>
             
             <div className="p-6 space-y-6">
-              {/* Artist Header */}
+              {/* Artist Header with Image */}
               <div className="text-center">
-                <div className="w-20 h-20 bg-gradient-to-br from-lilac-400 to-lilac-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
-                  {selectedArtist.name.split(' ').map(n => n[0]).join('')}
+                <div className="relative w-24 h-24 mx-auto mb-4">
+                  <img
+                    src={selectedArtist.imageUrl}
+                    alt={`Portrait of ${selectedArtist.name}`}
+                    className="w-full h-full object-cover rounded-full shadow-lg"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-lilac-400/20 to-lilac-600/20 rounded-full"></div>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-1">{selectedArtist.name}</h3>
                 <p className="text-lilac-600 font-medium text-lg">{selectedArtist.handle}</p>

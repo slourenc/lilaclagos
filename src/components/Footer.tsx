@@ -7,6 +7,14 @@ const Footer: React.FC = () => {
     window.open('https://www.instagram.com/lilaclagospt', '_blank', 'noopener,noreferrer');
   };
 
+  const handleFacebookClick = () => {
+    window.open('https://www.facebook.com/profile.php?id=61566058485167', '_blank', 'noopener,noreferrer');
+  };
+
+  const handleBlogClick = () => {
+    window.open('https://lagoslilac.blogspot.com', '_blank', 'noopener,noreferrer');
+  };
+
   const handleEmailClick = () => {
     window.location.href = 'mailto:lagoslilac@gmail.com';
   };
@@ -107,6 +115,32 @@ const Footer: React.FC = () => {
               >
                 <span>📸</span>
                 <span className="text-sm">@lilaclagospt</span>
+              </div>
+
+              {/* Facebook */}
+              <div 
+                className="flex items-center gap-3 text-gray-300 hover:text-lilac-300 cursor-pointer transition-colors duration-200"
+                onClick={handleFacebookClick}
+                onKeyDown={(e) => handleKeyDown(e, handleFacebookClick)}
+                tabIndex={0}
+                role="button"
+                aria-label="Visit our Facebook page"
+              >
+                <span>👥</span>
+                <span className="text-sm">Facebook</span>
+              </div>
+
+              {/* Blog */}
+              <div 
+                className="flex items-center gap-3 text-gray-300 hover:text-lilac-300 cursor-pointer transition-colors duration-200"
+                onClick={handleBlogClick}
+                onKeyDown={(e) => handleKeyDown(e, handleBlogClick)}
+                tabIndex={0}
+                role="button"
+                aria-label="Visit our blog"
+              >
+                <span>📝</span>
+                <span className="text-sm">Blog</span>
               </div>
 
               {/* Location */}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { imageConfig } from '../utils/imageConfig';
 import { siteContent } from '../data/content';
 
 const About: React.FC = () => {
@@ -58,7 +59,7 @@ const About: React.FC = () => {
               {/* Main Image */}
               <div className="artwork-card h-80 mb-6">
                 <img 
-                  src="https://picsum.photos/500/400?random=17" 
+                  src={imageConfig.studio.mainSpace} 
                   alt="LiLAC studio space"
                   className="w-full h-full object-cover"
                 />
@@ -74,14 +75,14 @@ const About: React.FC = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="artwork-card h-32">
                   <img 
-                    src="https://picsum.photos/300/200?random=18" 
+                    src={imageConfig.studio.workshopArea} 
                     alt="Community workshop"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="artwork-card h-32">
                   <img 
-                    src="https://picsum.photos/300/200?random=19" 
+                    src={imageConfig.studio.collaboration} 
                     alt="Artist collaboration"
                     className="w-full h-full object-cover"
                   />
